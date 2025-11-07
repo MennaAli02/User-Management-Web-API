@@ -1,0 +1,90 @@
+### Get all users (Public, no auth required)
+GET http://localhost:5249/users
+Accept: application/json
+
+###
+
+### Get user by ID (Public, no auth required)
+GET http://localhost:5249/users/2
+Accept: application/json
+
+###
+
+### Create user (Protected, missing token)
+POST http://localhost:5249/users
+Content-Type: application/json
+
+{
+  "name": "Jana",
+  "email": "jana@example.com"
+}
+
+###
+
+### Create user (Protected, with valid token)
+POST http://localhost:5249/users
+Authorization: Bearer my-secret-token
+Content-Type: application/json
+
+{
+  "name": "Jana",
+  "email": "jana@example.com"
+}
+
+###
+
+### Create user (Protected, with invalid token)
+POST http://localhost:5249/users
+Authorization: Bearer wrong-token
+Content-Type: application/json
+
+{
+  "name": "Jana",
+  "email": "jana@example.com"
+}
+
+###
+
+### Create user (Protected, with validation error)
+POST http://localhost:5249/users
+Authorization: Bearer my-secret-token
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "invalidemail"
+}
+
+###
+
+### Update user (Protected, with valid data)
+PUT http://localhost:5249/users/2
+Authorization: Bearer my-secret-token
+Content-Type: application/json
+
+{
+  "name": "Updated Jana",
+  "email": "updated@example.com"
+}
+
+###
+
+### Delete user (Protected)
+DELETE http://localhost:5249/users/1
+
+
+### Delete user (Protected)
+DELETE http://localhost:5249/users/2
+Authorization: Bearer my-secret-token
+Accept: application/json
+
+###
+
+### Trigger error manually (e.g., invalid route)
+GET http://localhost:5249/invalid-route
+Accept: application/json
+
+
+### Trigger internal server error via crash endpoint
+GET http://localhost:5249/crash
+Accept: application/json
